@@ -1,0 +1,53 @@
+---
+import Accordion from './Accordion.astro';
+import Icon from './Icon.astro';
+import { generalFaqs } from '../data/services';
+import { whatsappLink } from '../data/site';
+---
+
+<section class="section on-mist">
+  <div class="wrap faq">
+    <div class="side reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="display h2">Common questions.</h2>
+      <p class="muted">Something else? Ask us directly.</p>
+      <a class="link-arrow" href={whatsappLink('Hello, I have a question about façade cleaning.')} target="_blank" rel="noopener">
+        Ask on WhatsApp <Icon name="arrow-right" />
+      </a>
+    </div>
+    <div class="reveal" style="--d:100ms">
+      <Accordion items={generalFaqs} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .side {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    position: sticky;
+    top: calc(var(--nav-h) + var(--space-4));
+  }
+  .side h2 {
+    max-width: 10ch;
+  }
+  .side .link-arrow {
+    margin-top: var(--space-2);
+  }
+  @media (max-width: 860px) {
+    .faq {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .side {
+      position: static;
+    }
+  }
+</style>
