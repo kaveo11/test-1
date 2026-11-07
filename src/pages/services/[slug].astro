@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Media from '../../components/Media.astro';
+import Icon from '../../components/Icon.astro';
+import Accordion from '../../components/Accordion.astro';
+import CTA from '../../components/CTA.astro';
+import { services } from '../../data/services';
+import { site, whatsappLink } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const others = services.filter((x) => x.slug !== s.slug);
+---
+
+<BaseLayout title={s.title} description={s.intro}>
+  <!-- 1. Overview: split headline + image -->
+  <section class="ov">
+    <div class="wrap grid-2">
+      <div class="txt">
+        <p class="eyebrow reveal"><a href="/services">Services</a> / {s.title}</p>
+        <h1 class="display h1 reveal" style="--d:80ms">{s.title}</h1>
+        <p class="lead reveal" style="--d:160ms">{s.intro}</p>
+        <dl class="facts reveal" style="--d:240ms">
+          <div><dt>Height</dt><dd>{s.height}</dd></div>
+          <div><dt>Best for</dt><dd>{s.bestFor}</dd></div>
+        </dl>
+        <a class="btn btn--ink reveal" style="--d:300ms" href={whatsappLink(`Hello, I would like a quote for ${s.title.toLowerCase()}.`)} target="_blank" rel="noopener">
+          Quote this service <Icon name="arrow-right" />
+        </a>
+      </div>
+      <Media spec={s.hero} alt={s.title} class="pic" fallback="#0e3345" />
+    </div>
+  </section>
+
+  <!-- 2. Scope: checklist on mist -->
+  <section class="section on-mist">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Scope</p>
+        <h2 class="display h2">What is included.</h2>
+      </div>
+      <ul class="scope">
+        {s.scope.map((x, i) => (
+          <li class="reveal" style={`--d:${i * 60}ms`}><Icon name="check" /> <span>{x}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Process: vertical timeline on ink -->
+  <section class="section on-ink">
+    <div class="wrap">
+      <p class="eyebrow reveal">Process</p>
+      <h2 class="display h2 reveal" style="margin:var(--space-2) 0 var(--space-5)">Step by step.</h2>
+      <ol class="tl">
+        {s.steps.map((st, i) => (
+          <li class="reveal">
+            <span class="num display">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display">{st.title}</h3>
+            <p class="muted">{st.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. Plans: columns, outlined -->
+  <section class="section">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Plans</p>
+          <h2 class="display h2">Pick a schedule.</h2>
+        </div>
+        <p class="muted lead reveal" style="--d:100ms">
+          Price is per square metre, quoted after the survey. Dubai market rates commonly sit between AED 5 and AED 15 per m², depending on height, access and frequency.
+        </p>
+      </div>
+      <div class="plans">
+        {s.plans.map((p, i) => (
+          <article class="plan reveal" style={`--d:${i * 90}ms`}>
+            <h3 class="display h3">{p.name}</h3>
+            <p class="freq">{p.frequency}</p>
+            <p class="muted">For: {p.for}</p>
+            <button class="link-arrow" data-open-quote>Ask for a price <Icon name="arrow-right" /></button>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FAQ -->
+  <section class="section on-mist">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">FAQ</p>
+        <h2 class="display h2">About {s.title.toLowerCase()}.</h2>
+      </div>
+      <div class="reveal" style="--d:100ms"><Accordion items={s.faqs} /></div>
+    </div>
+  </section>
+
+  <section class="section--tight others">
+    <div class="wrap">
+      <p class="eyebrow">Other methods</p>
+      <ul>
+        {others.map((o) => (
+          <li><a class="display h3" href={`/services/${o.slug}`}>{o.title} <Icon name="arrow-right" /></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .ov {
+    padding-block: var(--space-6);
+  }
+  .ov .grid-2 {
+    align-items: center;
+  }
+  .txt {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+  h1 {
+    font-size: var(--step-3);
+  }
+  .eyebrow a:hover {
+    text-decoration: underline;
+  }
+  .facts {
+    display: grid;
+    gap: var(--space-2);
+    border-top: 1px solid var(--rule);
+    padding-top: var(--space-2);
+    width: 100%;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--space-2);
+  }
+  dt {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  dd {
+    margin: 0;
+  }
+  .pic {
+    aspect-ratio: 4 / 5;
+  }
+  .scope li {
+    display: flex;
+    gap: var(--space-2);
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: flex-start;
+  }
+  .scope :global(svg) {
+    width: 1.3rem;
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--teal);
+  }
+  .tl {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-3);
+  }
+  .tl li {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: var(--space-3);
+    display: grid;
+    gap: var(--space-1);
+    align-content: start;
+  }
+  .num {
+    color: var(--accent);
+    font-size: var(--step-1);
+  }
+  .tl h3 {
+    font-size: var(--step-1);
+    font-weight: 400;
+  }
+  .tl p {
+    font-size: var(--step--1);
+  }
+  .head {
+    align-items: end;
+    margin-bottom: var(--space-5);
+  }
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .plan {
+    border: 1px solid var(--ink);
+    padding: var(--space-4);
+    display: grid;
+    gap: var(--space-1);
+    align-content: start;
+    justify-items: start;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .plan:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .plan:hover .muted {
+    color: #a9bfca;
+  }
+  .freq {
+    color: var(--teal);
+    font-weight: 500;
+  }
+  .plan:hover .freq {
+    color: var(--glass);
+  }
+  .plan .link-arrow {
+    margin-top: var(--space-3);
+  }
+  .others ul {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: var(--space-3);
+  }
+  .others a {
+    display: inline-flex;
+    gap: 0.75rem;
+    align-items: center;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.5rem;
+  }
+  .others a:hover {
+    border-color: var(--accent);
+  }
+  .others a :global(svg) {
+    width: 1.3rem;
+  }
+  @media (max-width: 1080px) {
+    .tl {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 860px) {
+    .plans {
+      grid-template-columns: 1fr;
+    }
+    .tl {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

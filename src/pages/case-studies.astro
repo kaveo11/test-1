@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Media from '../components/Media.astro';
+import CompareSlider from '../components/CompareSlider.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CTA from '../components/CTA.astro';
+import { cases } from '../data/content';
+import { media } from '../data/media';
+---
+
+<BaseLayout title="Case studies" description="Sample projects: what the building needed, what we did, and what changed.">
+  <PageHeader
+    eyebrow="Case studies"
+    title="What we found, what we did."
+    lead="Sample projects for a demo brand. Replace with your own before launch."
+  />
+
+  <!-- Project details -->
+  {cases.map((c, i) => (
+    <section id={c.slug} class:list={['case', { alt: i % 2 }]}>
+      <div class="wrap grid-2">
+        <Media spec={(media as any)[c.img]} index={i} alt={c.name} class="pic" fallback="#0e3345" />
+        <div class="body">
+          <p class="eyebrow reveal">{c.method} · {c.place}</p>
+          <h2 class="display h2 reveal" style="--d:80ms">{c.name}</h2>
+          <dl class="facts reveal" style="--d:140ms">
+            {c.facts.map((f) => (
+              <div><dt>{f.k}</dt><dd class="display">{f.v}</dd></div>
+            ))}
+          </dl>
+          <div class="text reveal" style="--d:200ms">
+            <h3>Brief</h3>
+            <p class="muted">{c.brief}</p>
+            <h3>Work</h3>
+            <p class="muted">{c.work}</p>
+            <h3>Result</h3>
+            <p>{c.result}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Compare -->
+  <section class="section on-ink">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">The difference</p>
+          <h2 class="display h2">Drag to compare.</h2>
+        </div>
+        <p class="muted lead reveal" style="--d:100ms">Dust and sand bond to glass within weeks. A pure-water wash lifts the film without scratching.</p>
+      </div>
+      <div class="reveal"><CompareSlider /></div>
+    </div>
+  </section>
+
+  <Testimonials />
+  <CTA />
+</BaseLayout>
+
+<style>
+  .case {
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--rule);
+  }
+  .case.alt {
+    background: var(--mist);
+  }
+  .case.alt .pic {
+    order: 2;
+  }
+  .pic {
+    aspect-ratio: 4 / 5;
+  }
+  .body {
+    display: grid;
+    gap: var(--space-3);
+    align-content: center;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    border-block: 1px solid var(--rule);
+    padding-block: var(--space-3);
+  }
+  dt {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  dd {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+  .text {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .text h3 {
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-top: var(--space-2);
+  }
+  .head {
+    align-items: end;
+    margin-bottom: var(--space-5);
+  }
+  @media (max-width: 860px) {
+    .case.alt .pic {
+      order: 0;
+    }
+  }
+</style>

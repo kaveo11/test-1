@@ -1,0 +1,58 @@
+---
+// Scroll progress shown as a floor number on the right edge (G to roof).
+---
+
+<div id="floor-gauge" class="fg" aria-hidden="true">
+  <span class="fg-label">Floor</span>
+  <span class="fg-n">G</span>
+  <div class="fg-track"><div class="fg-fill"></div></div>
+</div>
+
+<style>
+  .fg {
+    position: fixed;
+    right: clamp(0.6rem, 1.6vw, 1.6rem);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    height: 34vh;
+    mix-blend-mode: difference;
+    color: #fff;
+    pointer-events: none;
+  }
+  .fg-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+  .fg-n {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    min-width: 2ch;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .fg-track {
+    flex: 1;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.35);
+    position: relative;
+  }
+  .fg-fill {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  @media (max-width: 980px) {
+    .fg {
+      display: none;
+    }
+  }
+</style>

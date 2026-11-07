@@ -1,0 +1,27 @@
+---
+// Container for a Pexels photo or video. The script fills it lazily.
+// Fallback is a solid colour (--fallback) if the API is unavailable.
+interface Props {
+  spec: { kind: string; query: string; orientation: string };
+  index?: number;
+  alt?: string;
+  class?: string;
+  fallback?: string;
+  style?: string;
+}
+const { spec, index = 0, alt = '', class: cls = '', fallback, style = '' } = Astro.props;
+const st = `${fallback ? `--fallback:${fallback};` : ''}${style}`;
+---
+
+<div
+  class:list={['media', cls]}
+  data-kind={spec.kind}
+  data-query={spec.query}
+  data-orientation={spec.orientation}
+  data-index={index}
+  data-alt={alt}
+  style={st}
+  role={alt ? 'img' : undefined}
+  aria-label={alt || undefined}
+>
+</div>

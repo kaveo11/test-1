@@ -1,0 +1,79 @@
+---
+interface Props {
+  items: { q: string; a: string }[];
+  dark?: boolean;
+}
+const { items, dark = false } = Astro.props;
+---
+
+<div class:list={['acc', { dark }]} data-acc>
+  {items.map((it, i) => (
+    <div class:list={['acc-item', { open: i === 0 }]}>
+      <button class="acc-btn" aria-expanded={i === 0 ? 'true' : 'false'}>
+        <span>{it.q}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="square"></path>
+        </svg>
+      </button>
+      <div class="acc-body"><div><p>{it.a}</p></div></div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .acc {
+    border-top: 1px solid var(--rule);
+  }
+  .acc.dark {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .acc-item {
+    border-bottom: 1px solid var(--rule);
+  }
+  .dark .acc-item {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .acc-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: left;
+    padding-block: 1.5rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+  }
+  .acc-btn svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: none;
+    transition: transform 0.35s var(--ease);
+    color: var(--teal);
+  }
+  .dark .acc-btn svg {
+    color: var(--glass);
+  }
+  .acc-item.open .acc-btn svg {
+    transform: rotate(45deg);
+  }
+  .acc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s var(--ease);
+  }
+  .acc-body > div {
+    overflow: hidden;
+  }
+  .acc-item.open .acc-body {
+    grid-template-rows: 1fr;
+  }
+  .acc-body p {
+    padding-bottom: 1.6rem;
+    max-width: 60ch;
+    color: var(--muted);
+  }
+  .dark .acc-body p {
+    color: #a9bfca;
+  }
+</style>

@@ -1,0 +1,248 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { services } from '../data/services';
+import { nav, whatsappLink } from '../data/site';
+const path = Astro.url.pathname;
+const active = (href: string) => path === href || path.startsWith(href + '/');
+---
+
+<header id="site-header" class:list={['site-header', { dark: Astro.props.dark }]}>
+  <div class="bar wrap">
+    <a href="/" class="brand" aria-label="Sheer home"><Logo height={46} tone="dark" /></a>
+
+    <button id="nav-toggle" class="toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu">
+      <Icon name="menu" />
+    </button>
+
+    <nav id="nav-panel" class="panel" aria-label="Main">
+      <ul>
+        <li class="dd">
+          <button class:list={['dd-btn', { on: active('/services') }]} aria-expanded="false" aria-haspopup="true">
+            <span class="fl">01</span> Services <Icon name="chevron-down" class="chev" />
+          </button>
+          <ul class="menu">
+            {services.map((s, i) => (
+              <li>
+                <a href={`/services/${s.slug}`}>
+                  <span class="fl">{String(i + 1).padStart(2, '0')}</span>
+                  <span>
+                    <strong>{s.title}</strong>
+                    <small>{s.height}</small>
+                  </span>
+                </a>
+              </li>
+            ))}
+            <li class="all"><a href="/services">All services <Icon name="arrow-right" /></a></li>
+          </ul>
+        </li>
+        {nav.map((n, i) => (
+          <li>
+            <a href={n.href} class:list={{ on: active(n.href) }}><span class="fl">{String(i + 2).padStart(2, '0')}</span> {n.label}</a>
+          </li>
+        ))}
+      </ul>
+      <a href={whatsappLink()} class="btn btn--ink cta" target="_blank" rel="noopener">
+        WhatsApp <Icon name="arrow-right" />
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    transition: box-shadow 0.3s var(--ease);
+  }
+  .site-header.scrolled {
+    box-shadow: 0 8px 30px rgba(10, 27, 42, 0.08);
+  }
+  .bar {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: block;
+  }
+  .toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+  }
+  .toggle :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+  .panel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .panel > ul {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .panel a,
+  .dd-btn {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-weight: 500;
+    padding-block: 0.5rem;
+    position: relative;
+  }
+  .fl {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    font-variant-numeric: tabular-nums;
+  }
+  .panel > ul > li > a::after,
+  .dd-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+  }
+  .panel > ul > li > a:hover::after,
+  .panel > ul > li > a.on::after,
+  .dd-btn:hover::after,
+  .dd-btn.on::after {
+    transform: scaleX(1);
+  }
+  .chev {
+    width: 14px;
+    height: 14px;
+    align-self: center;
+    transition: transform 0.25s var(--ease);
+  }
+  .dd {
+    position: relative;
+  }
+  .dd.open .chev {
+    transform: rotate(180deg);
+  }
+  .menu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: -1.25rem;
+    min-width: 340px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    box-shadow: 0 24px 60px rgba(10, 27, 42, 0.14);
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
+  }
+  .dd.open .menu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .menu a {
+    display: flex;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .menu a:hover {
+    background: var(--mist);
+  }
+  .menu small {
+    display: block;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .menu .all a {
+    border-top: 1px solid var(--rule);
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.25rem;
+  }
+  .menu .all :global(svg) {
+    width: 1rem;
+  }
+  .cta {
+    padding: 0.7rem 1.2rem;
+  }
+
+  @media (max-width: 980px) {
+    .toggle {
+      display: grid;
+    }
+    .panel {
+      position: fixed;
+      inset: var(--nav-h) 0 0 0;
+      background: var(--white);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding: var(--space-4) var(--gutter);
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease);
+      overflow-y: auto;
+    }
+    .panel.open {
+      transform: none;
+    }
+    .panel > ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .panel > ul > li {
+      border-bottom: 1px solid var(--rule);
+    }
+    .panel a,
+    .dd-btn {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      padding-block: 1rem;
+      width: 100%;
+    }
+    .menu {
+      position: static;
+      min-width: 0;
+      box-shadow: none;
+      border: 0;
+      padding: 0;
+      display: none;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+    .dd.open .menu {
+      display: block;
+    }
+    .menu a {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.8rem 0 0.8rem 1rem;
+    }
+    .cta {
+      justify-content: center;
+      margin-top: var(--space-3);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      width: auto;
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { services } from '../data/services';
+---
+
+<section class="section">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">Services</p>
+      <h2 class="display h2">Four ways to reach the glass.</h2>
+    </div>
+    <ul class="rows">
+      {services.map((s, i) => (
+        <li class="reveal" style={`--d:${i * 70}ms`}>
+          <a href={`/services/${s.slug}`}>
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="t display">{s.title}</span>
+            <span class="d muted">{s.short}</span>
+            <Icon name="arrow-right" class="ar" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .head {
+    margin-bottom: var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .rows {
+    border-top: 1px solid var(--ink);
+  }
+  li {
+    border-bottom: 1px solid var(--rule);
+  }
+  a {
+    display: grid;
+    grid-template-columns: 4rem 1.1fr 1fr 2rem;
+    gap: var(--space-3);
+    align-items: center;
+    padding-block: var(--space-4);
+    transition: padding 0.35s var(--ease), background 0.35s var(--ease);
+  }
+  a:hover {
+    padding-inline: var(--space-3);
+    background: var(--mist);
+  }
+  .n {
+    color: var(--teal);
+    font-variant-numeric: tabular-nums;
+  }
+  .t {
+    font-size: var(--step-2);
+  }
+  .ar {
+    width: 1.6rem;
+    transition: transform 0.3s var(--ease);
+  }
+  a:hover .ar {
+    transform: translateX(6px);
+    color: var(--accent);
+  }
+  @media (max-width: 860px) {
+    a {
+      grid-template-columns: 2.5rem 1fr 1.5rem;
+    }
+    .d {
+      grid-column: 2 / 3;
+      grid-row: 2;
+    }
+    .ar {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+</style>

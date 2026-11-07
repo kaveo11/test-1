@@ -1,0 +1,49 @@
+---
+import { testimonials } from '../data/content';
+---
+
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow reveal">What clients say</p>
+    <div class="grid">
+      {testimonials.map((t, i) => (
+        <figure class="reveal" style={`--d:${i * 100}ms`}>
+          <blockquote class="display">“{t.quote}”</blockquote>
+          <figcaption>
+            <strong>{t.role}</strong>
+            <span class="muted">{t.org}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+  }
+  figure {
+    border-top: 2px solid var(--ink);
+    padding-top: var(--space-3);
+    display: grid;
+    gap: var(--space-3);
+    align-content: space-between;
+  }
+  blockquote {
+    font-size: var(--step-1);
+    line-height: 1.3;
+  }
+  figcaption {
+    display: grid;
+    font-size: var(--step--1);
+  }
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

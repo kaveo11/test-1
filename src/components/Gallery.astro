@@ -1,0 +1,96 @@
+---
+import Media from './Media.astro';
+import { media } from '../data/media';
+const tiles = [
+  { spec: media.glassTower, cap: 'Glass, top to bottom', cls: 'a', i: 0 },
+  { spec: media.ropeAccess, cap: 'Two ropes per technician', cls: 'b', i: 0 },
+  { spec: media.detail, cap: 'Mullions and fins', cls: 'c', i: 1 },
+  { spec: media.skyline, cap: 'Dubai skyline', cls: 'd', i: 2 },
+  { spec: media.villa, cap: 'Villa glass', cls: 'e', i: 1 },
+];
+---
+
+<section class="section--tight gal">
+  <div class="wrap head reveal">
+    <p class="eyebrow">Gallery</p>
+    <h2 class="display h2">What the work looks like.</h2>
+  </div>
+  <div class="wrap">
+    <div class="mosaic">
+      {tiles.map((t, k) => (
+        <figure class:list={['tile', t.cls, 'reveal']} style={`--d:${k * 80}ms`}>
+          <Media spec={t.spec} index={t.i} alt={t.cap} class="media--fill" fallback={k % 2 ? '#1f6f80' : '#0e3345'} />
+          <figcaption>{t.cap}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gal {
+    padding-bottom: var(--space-7);
+  }
+  .head {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 120px;
+    gap: 8px;
+  }
+  .tile {
+    position: relative;
+    overflow: hidden;
+  }
+  .tile figcaption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0.6rem 1rem;
+    background: var(--white);
+    font-size: var(--step--1);
+    z-index: 2;
+  }
+  .a {
+    grid-column: 1 / 6;
+    grid-row: 1 / 5;
+  }
+  .b {
+    grid-column: 6 / 9;
+    grid-row: 1 / 4;
+  }
+  .c {
+    grid-column: 9 / 13;
+    grid-row: 1 / 3;
+  }
+  .d {
+    grid-column: 9 / 13;
+    grid-row: 3 / 5;
+  }
+  .e {
+    grid-column: 6 / 9;
+    grid-row: 4 / 5;
+  }
+  @media (max-width: 760px) {
+    .mosaic {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 160px;
+    }
+    .a,
+    .b,
+    .c,
+    .d,
+    .e {
+      grid-column: auto;
+      grid-row: auto;
+    }
+    .a {
+      grid-column: 1 / 3;
+      grid-row: span 2;
+    }
+  }
+</style>

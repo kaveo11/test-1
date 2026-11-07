@@ -1,0 +1,45 @@
+---
+import Media from './Media.astro';
+import { media } from '../data/media';
+interface Props {
+  spec?: any;
+  title?: string;
+  text?: string;
+}
+const { spec = media.workVideo, title = 'Work at height, done slowly.', text = 'Every anchor is checked. Every rope is logged. The crew goes down only after the rescue plan is agreed.' } = Astro.props;
+---
+
+<section class="band">
+  <Media spec={spec} class="media--fill" fallback="#0a1b2a" />
+  <div class="overlay overlay--dark"></div>
+  <div class="wrap in">
+    <h2 class="display h2 reveal">{title}</h2>
+    <p class="reveal" style="--d:120ms">{text}</p>
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+  }
+  .in {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-6);
+  }
+  h2 {
+    max-width: 14ch;
+  }
+  p {
+    max-width: 38ch;
+    font-size: var(--step-1);
+    color: #e3edf1;
+  }
+</style>

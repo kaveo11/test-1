@@ -1,0 +1,105 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="section on-mist">
+  <div class="wrap mf grid-2" id="method-finder">
+    <div class="reveal">
+      <p class="eyebrow">Method finder</p>
+      <h2 class="display h2">How tall is your building?</h2>
+      <p class="muted lead">Move the slider. We show the access method we would use.</p>
+    </div>
+
+    <div class="panel reveal" style="--d:120ms">
+      <div class="readout">
+        <div class="bar" aria-hidden="true"><div id="mf-bar" class="fill"></div></div>
+        <div class="nums">
+          <output class="big display"><span id="mf-floors-out">30</span><small> floors</small></output>
+          <p class="muted">about <span id="mf-meters">108</span> m</p>
+        </div>
+      </div>
+      <label class="sl">
+        <span class="sr-only">Number of floors</span>
+        <input id="mf-floors" type="range" min="1" max="80" value="30" />
+      </label>
+      <label class="chk">
+        <input id="mf-bmu" type="checkbox" />
+        <span>The building has a working BMU (roof cradle)</span>
+      </label>
+      <div class="result">
+        <p class="eyebrow">We would use</p>
+        <h3 id="mf-title" class="display h3">Rope access</h3>
+        <p id="mf-text" class="muted"></p>
+        <a id="mf-link" class="link-arrow" href="/services/rope-access">View method <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel {
+    background: var(--white);
+    padding: var(--space-4);
+    border: 1px solid var(--rule);
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-3);
+    align-items: end;
+    height: 190px;
+  }
+  .bar {
+    height: 100%;
+    background: var(--mist);
+    position: relative;
+  }
+  .fill {
+    --h: 40%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--h);
+    background: var(--teal);
+    transition: height 0.3s var(--ease);
+  }
+  .big {
+    font-size: var(--step-4);
+    line-height: 1;
+  }
+  .big small {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    color: var(--muted);
+  }
+  .sl {
+    display: block;
+    margin-block: var(--space-3) var(--space-2);
+  }
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 28px;
+  }
+  .chk {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .chk input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--teal);
+  }
+  .result {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--rule);
+    display: grid;
+    gap: 0.6rem;
+    justify-items: start;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+import { steps } from '../data/content';
+---
+
+<section class="section on-ink">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="display h2">From survey to report.</h2>
+    </div>
+    <ol class="line">
+      {steps.map((s, i) => (
+        <li class="reveal" style={`--d:${i * 110}ms`}>
+          <span class="n display">{s.n}</span>
+          <h3 class="display h3">{s.title}</h3>
+          <p class="muted">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  .line {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    position: relative;
+  }
+  .line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.55rem;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  li {
+    position: relative;
+    padding-top: var(--space-5);
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    top: 1.3rem;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+  }
+  .n {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.1rem;
+    color: var(--glass);
+  }
+  h3 {
+    margin-bottom: var(--space-1);
+    font-size: var(--step-1);
+  }
+  @media (max-width: 860px) {
+    .line {
+      grid-template-columns: 1fr;
+    }
+    .line::before {
+      display: none;
+    }
+    li {
+      padding-top: var(--space-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    li::before {
+      top: -5px;
+    }
+    .n {
+      top: var(--space-2);
+    }
+  }
+</style>

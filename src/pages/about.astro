@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Media from '../components/Media.astro';
+import CTA from '../components/CTA.astro';
+import { media } from '../data/media';
+import { values, team } from '../data/content';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="About" description="Who we are, how we work, and where we operate in the UAE.">
+  <!-- 1. Story with video -->
+  <section class="story">
+    <Media spec={media.aboutVideo} class="media--fill" fallback="#0e3345" />
+    <div class="overlay overlay--dark"></div>
+    <div class="wrap in">
+      <p class="eyebrow reveal">About</p>
+      <h1 class="display h1 reveal" style="--d:80ms">We clean what other people look through.</h1>
+      <p class="lead reveal" style="--d:160ms">
+        Sheer is a façade cleaning company in Dubai. We started with towers in Business Bay and now work across the UAE.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Values: three large columns -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow reveal">How we work</p>
+      <div class="vals">
+        {values.map((v, i) => (
+          <div class="reveal" style={`--d:${i * 90}ms`}>
+            <span class="num display">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="display h3">{v.title}</h2>
+            <p class="muted">{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Team: roles -->
+  <section class="section on-mist">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Team</p>
+        <h2 class="display h2">The people you will deal with.</h2>
+      </div>
+      <ul class="team">
+        {team.map((t, i) => (
+          <li class="reveal" style={`--d:${i * 80}ms`}>
+            <strong class="display">{t.role}</strong>
+            <span class="muted">{t.note}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Areas: image + list -->
+  <section class="areas">
+    <Media spec={media.glassTowerWide} index={2} class="bg" fallback="#1f6f80" />
+    <div class="overlay overlay--light"></div>
+    <div class="wrap in">
+      <div class="reveal">
+        <p class="eyebrow">Service areas</p>
+        <h2 class="display h2">Where we work.</h2>
+      </div>
+      <ul class="al reveal" style="--d:120ms">
+        {site.areas.map((a) => <li>{a}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .story {
+    position: relative;
+    min-height: 82vh;
+    display: flex;
+    align-items: flex-end;
+    color: var(--white);
+    overflow: hidden;
+    margin-top: calc(var(--nav-h) * -1);
+    padding-top: var(--nav-h);
+  }
+  .in {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-6);
+  }
+  .story .eyebrow {
+    color: var(--glass);
+  }
+  .story h1 {
+    max-width: 14ch;
+    font-size: var(--step-3);
+  }
+  .story .lead {
+    color: #e3edf1;
+  }
+  .vals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+  .vals > div {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+  .num {
+    color: var(--accent);
+    font-size: var(--step-2);
+  }
+  .team li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .team strong {
+    font-weight: 400;
+    font-size: var(--step-1);
+  }
+  .areas {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-7);
+  }
+  .areas .bg {
+    position: absolute;
+    inset: 0;
+  }
+  .areas .in {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    padding-block: 0;
+  }
+  .al {
+    columns: 1;
+  }
+  .al li {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    padding-block: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 860px) {
+    .vals,
+    .areas .in {
+      grid-template-columns: 1fr;
+    }
+    .team li {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

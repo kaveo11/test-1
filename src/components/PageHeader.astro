@@ -1,0 +1,35 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<header class="ph">
+  <div class="wrap">
+    <p class="eyebrow reveal">{eyebrow}</p>
+    <h1 class="display h1 reveal" style="--d:80ms">{title}</h1>
+    {lead && <p class="lead muted reveal" style="--d:160ms">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .ph {
+    padding-block: var(--space-6) var(--space-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .ph .wrap {
+    display: grid;
+    gap: var(--space-3);
+  }
+  h1 {
+    max-width: 14ch;
+    font-size: var(--step-3);
+  }
+  .lead {
+    max-width: 46ch;
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+import { months } from '../data/content';
+---
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid-2 head">
+      <div class="reveal">
+        <p class="eyebrow">When to clean</p>
+        <h2 class="display h2">Winter is the safest window.</h2>
+      </div>
+      <p class="muted lead reveal" style="--d:100ms">
+        December to February brings lower, steadier wind. In summer, temperatures pass 45°C, so crews start early and work shorter shifts.
+        Dust storms can happen in any month.
+      </p>
+    </div>
+    <ol class="strip reveal" style="--d:150ms">
+      {months.map((m) => (
+        <li class={m.t}>
+          <span class="mo">{m.m}</span>
+          <span class="tag">{m.t === 'best' ? 'Best' : m.t === 'hot' ? 'Early starts' : 'Good'}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .head {
+    align-items: end;
+    margin-bottom: var(--space-5);
+  }
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4px;
+  }
+  li {
+    min-height: 150px;
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--mist);
+    transition: transform 0.3s var(--ease);
+  }
+  li:hover {
+    transform: translateY(-6px);
+  }
+  li.best {
+    background: var(--teal);
+    color: var(--white);
+    min-height: 210px;
+  }
+  li.hot {
+    background: var(--deep);
+    color: var(--white);
+  }
+  .mo {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+  }
+  .tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 860px) {
+    .strip {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    li,
+    li.best {
+      min-height: 110px;
+    }
+  }
+</style>

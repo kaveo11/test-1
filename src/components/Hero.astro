@@ -1,0 +1,89 @@
+---
+import Media from './Media.astro';
+import Icon from './Icon.astro';
+import { media } from '../data/media';
+import { whatsappLink } from '../data/site';
+---
+
+<section class="hero on-ink">
+  <Media spec={media.heroVideo} class="media--fill" fallback="#0e3345" />
+  <div class="overlay overlay--dark"></div>
+  <div class="wrap inner">
+    <p class="eyebrow reveal">Façade cleaning · Dubai</p>
+    <h1 class="display h1 reveal" style="--d:100ms">
+      Clear glass,<br /><em>all the way up.</em>
+    </h1>
+    <p class="lead reveal" style="--d:200ms">
+      IRATA-certified crews clean towers, hotels and villas across the UAE, from the ground to the roofline.
+    </p>
+    <div class="actions reveal" style="--d:300ms">
+      <a class="btn btn--solid" href={whatsappLink()} target="_blank" rel="noopener">
+        Get a quote on WhatsApp <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--line" href="/services">See services</a>
+    </div>
+  </div>
+  <div class="scroll" aria-hidden="true"><span></span></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-block: calc(var(--nav-h) + var(--space-5)) var(--space-6);
+  }
+  .inner {
+    position: relative;
+    z-index: 2;
+  }
+  h1 {
+    margin: var(--space-3) 0;
+    max-width: 12ch;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--glass);
+  }
+  .lead {
+    color: #e3edf1;
+    margin-bottom: var(--space-4);
+  }
+  .actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .btn--line {
+    color: var(--white);
+  }
+  .scroll {
+    position: absolute;
+    left: var(--gutter);
+    bottom: 1.5rem;
+    width: 1px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.25);
+    z-index: 2;
+    overflow: hidden;
+  }
+  .scroll span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 24px;
+    background: var(--accent);
+    animation: drop 2s var(--ease) infinite;
+  }
+  @keyframes drop {
+    from {
+      transform: translateY(-24px);
+    }
+    to {
+      transform: translateY(60px);
+    }
+  }
+</style>

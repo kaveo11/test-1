@@ -1,0 +1,36 @@
+---
+// Sheer logo: a window pane crossed by one glint line, with the wordmark.
+interface Props {
+  height?: number;
+  tone?: 'dark' | 'light';
+  mark?: boolean;
+}
+const { height = 52, tone = 'dark', mark = true } = Astro.props;
+const fg = tone === 'dark' ? '#0A1B2A' : '#FFFFFF';
+const w = mark ? 232 : 180;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${w} 56`}
+  height={height}
+  role="img"
+  aria-label="Sheer Façade Care"
+  style="width:auto;overflow:visible"
+>
+  {mark && (
+    <g>
+      <rect x="2" y="2" width="38" height="52" fill="none" stroke={fg} stroke-width="3" />
+      <path d="M12 44 L30 12" stroke="#E07B2E" stroke-width="3" />
+    </g>
+  )}
+  <text
+    x={mark ? 56 : 0}
+    y="40"
+    fill={fg}
+    font-family="'Fraunces', 'Times New Roman', serif"
+    font-size="44"
+    font-weight="400"
+    letter-spacing="-1">Sheer</text
+  >
+</svg>

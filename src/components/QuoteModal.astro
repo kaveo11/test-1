@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+---
+
+<dialog id="quote-modal" class="qm" aria-labelledby="qm-title">
+  <button class="qm-x" data-close-quote aria-label="Close"><Icon name="x" /></button>
+  <p class="eyebrow">Quote</p>
+  <h2 id="qm-title" class="display h3">Tell us about the building</h2>
+  <p class="muted">We reply on WhatsApp. No account needed.</p>
+  <form data-wa={site.phoneIntl}>
+    <label>Name<input name="name" required autocomplete="name" /></label>
+    <label>Building or area<input name="building" placeholder="e.g. Tower, Business Bay" /></label>
+    <label>Number of floors<input name="floors" inputmode="numeric" /></label>
+    <button class="btn btn--ink" type="submit">Send on WhatsApp <Icon name="arrow-right" /></button>
+  </form>
+</dialog>
+
+<style>
+  .qm {
+    border: 0;
+    padding: var(--space-4);
+    width: min(520px, calc(100vw - 2rem));
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: 0 40px 100px rgba(10, 27, 42, 0.35);
+  }
+  .qm::backdrop {
+    background: rgba(10, 27, 42, 0.6);
+    backdrop-filter: blur(3px);
+  }
+  .qm[open] {
+    animation: qm-in 0.35s var(--ease);
+  }
+  @keyframes qm-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+  .qm-x {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+  }
+  .qm-x :global(svg) {
+    width: 22px;
+  }
+  .qm h2 {
+    margin: 0.5rem 0;
+  }
+  form {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+  input {
+    font: inherit;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--rule);
+    background: var(--white);
+  }
+  input:focus {
+    outline: 2px solid var(--teal);
+    border-color: var(--teal);
+  }
+  form .btn {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+</style>

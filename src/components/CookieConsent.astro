@@ -1,0 +1,55 @@
+---
+---
+
+<div id="cookie" class="ck" hidden role="dialog" aria-label="Cookie notice">
+  <p>
+    This site stores your choice here and keeps image links in your browser for 24 hours so pages load faster.
+    No advertising or analytics cookies.
+  </p>
+  <div class="row">
+    <button class="btn btn--solid" data-cookie="accepted">Accept</button>
+    <button class="btn btn--line" data-cookie="essential">Essential only</button>
+  </div>
+</div>
+
+<style>
+  .ck {
+    position: fixed;
+    left: var(--gutter);
+    bottom: var(--gutter);
+    z-index: 90;
+    max-width: 420px;
+    background: var(--ink);
+    color: var(--white);
+    padding: var(--space-3);
+    box-shadow: 0 24px 60px rgba(10, 27, 42, 0.4);
+    animation: ck-in 0.6s var(--ease) 0.8s both;
+  }
+  .ck[hidden] {
+    display: none;
+  }
+  @keyframes ck-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  p {
+    font-size: var(--step--1);
+    margin-bottom: var(--space-2);
+    color: #d4e0e6;
+  }
+  .row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.65rem 1.1rem;
+    font-size: var(--step--1);
+  }
+  .btn--line:hover {
+    background: var(--white);
+    color: var(--ink);
+  }
+</style>

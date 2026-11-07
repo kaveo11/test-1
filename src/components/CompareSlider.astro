@@ -1,0 +1,97 @@
+---
+import Media from './Media.astro';
+import { media } from '../data/media';
+---
+
+<figure class="compare" style="--pos:50%">
+  <Media spec={media.detail} index={0} alt="Glass panel" class="base" fallback="#9cc7d1" />
+  <div class="dust" aria-hidden="true">
+    <Media spec={media.detail} index={0} class="inner" fallback="#9cc7d1" />
+    <div class="film"></div>
+  </div>
+  <input type="range" min="0" max="100" value="50" aria-label="Compare before and after" />
+  <span class="knob" aria-hidden="true"></span>
+  <span class="tag l">Before</span>
+  <span class="tag r">After</span>
+  <figcaption>Illustration: a simulated dust layer over a stock photo.</figcaption>
+</figure>
+
+<style>
+  .compare {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--mist);
+  }
+  .base,
+  .inner {
+    position: absolute;
+    inset: 0;
+  }
+  .dust {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+  .film {
+    position: absolute;
+    inset: 0;
+    background: rgba(176, 150, 112, 0.55);
+    mix-blend-mode: multiply;
+  }
+  input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    margin: 0;
+  }
+  .knob {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    background: var(--white);
+    pointer-events: none;
+  }
+  .knob::after {
+    content: '↔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .tag {
+    position: absolute;
+    top: 1rem;
+    background: var(--white);
+    padding: 0.3rem 0.8rem;
+    font-size: var(--step--1);
+    pointer-events: none;
+  }
+  .l {
+    left: 1rem;
+  }
+  .r {
+    right: 1rem;
+  }
+  figcaption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: var(--white);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    pointer-events: none;
+  }
+</style>

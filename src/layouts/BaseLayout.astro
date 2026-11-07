@@ -1,0 +1,70 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@fontsource-variable/inter-tight';
+import '@fontsource/fraunces/400.css';
+import '@fontsource/fraunces/400-italic.css';
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FloorGauge from '../components/FloorGauge.astro';
+import QuoteModal from '../components/QuoteModal.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+const fullTitle = title === site.name ? `${site.legal} | Dubai` : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="en-AE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/og-image.svg', site.url).href} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0A1B2A" />
+    <link rel="preconnect" href="https://api.pexels.com" crossorigin />
+    <link rel="dns-prefetch" href="https://videos.pexels.com" />
+    <link rel="dns-prefetch" href="https://images.pexels.com" />
+    <ClientRouter />
+  </head>
+  <body>
+    <a href="#main" class="skip">Skip to content</a>
+    <Navbar />
+    <FloorGauge />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <QuoteModal />
+    <CookieConsent />
+
+    <script>
+      import { initUI } from '../scripts/ui';
+      document.addEventListener('astro:page-load', initUI);
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  body.no-scroll {
+    overflow: hidden;
+  }
+  main {
+    padding-top: var(--nav-h);
+  }
+  main.flush {
+    padding-top: 0;
+  }
+</style>
